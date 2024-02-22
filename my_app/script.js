@@ -5,9 +5,6 @@ const app = createApp({
         return {
 
         }
-    },
-    methods: {
-
     }
 })
 app.mount('#root')

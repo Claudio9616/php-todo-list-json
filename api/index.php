@@ -1,22 +1,27 @@
 <?php
-header("Access-Control-Allow-Origin: http://127.0.0.1:5000");
+// per cors policy
+header("Access-Control-Allow-Origin: http://localhost");
 header("Access-Control-Allow-Headers: X-Requested-With");
-// Imposta l'header per rispondere con JSON
+// voglio rispondere in json per leggere i dati
 header('Content-Type: application/json');
-
-// Il path al file JSON
+// path del json
 $json_path = __DIR__ . '/../data/tasks.json';
-
-// Controlla se il file esiste e se è leggibile
-if (file_exists($json_path) && is_readable($json_path)) {
-    // Prende i contenuti del file JSON
-    $json_data = file_get_contents($json_path);
-    // Decodifica i dati JSON in un array associativo
+// prendo i contenuti nel file json
+$json_data = file_get_contents($json_path);
+// converto in array php per lavorarci e metto come secondo parametro TRUE perchè
+// è un array associativo
+$tasks = json_decode($json_data, true);
+// una volta decodificato in php controllo se ho un nuovo task e lo pusho dentro al mio tasks[]
+$new_task = $_POST['task'] ?? '';
+if ($new_task){
+    $tasks [] = $new_task;
+    // trasformo i dati in json
+    $tasks = json_encode($json_data, true);
+    // e li pusho nel file .json
+    file_put_contents($json_path, $tasks);
     $tasks = json_decode($json_data, true);
-} else {
-    // Gestisce l'errore se il file non esiste o non è leggibile
-    $tasks = ['error' => 'Unable to load tasks.'];
-}
+    // NON CAPISCO PERCHè APPENA INVIO UN DATO IN POST MI SI CANCELLA TOTALMENTE L'ARRAY NEL FILE JSON
+} 
 
-// Invia la risposta JSON
+// Invia la risposta in JSON
 echo json_encode($tasks);

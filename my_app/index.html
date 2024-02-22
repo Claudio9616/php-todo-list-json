@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <!-- AXIOS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"
         integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ=="
@@ -14,6 +13,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- VUE -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <!-- JS -->
@@ -22,12 +22,16 @@
 
 <body>
     <div id="root">
-        <div class="container">
+        <div class="container text-center">
             <ul>
-                <li v-for="(task) in tasks" :key="task.id">
+                <li v-for="task in tasks" :key="task.id">
                     {{task.text}}
                 </li>
             </ul>
+            <form @submit.prevent="addTask">
+                <input type="text" v-model.trim="text">
+                <button type="submit">INVIA</button>
+            </form>
         </div>
     </div>
 </body>

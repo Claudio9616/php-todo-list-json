@@ -12,15 +12,20 @@ $json_data = file_get_contents($json_path);
 // è un array associativo
 $tasks = json_decode($json_data, true);
 // una volta decodificato in php controllo se ho un nuovo task e lo pusho dentro al mio tasks[]
-$new_task = $_POST['task'] ?? '';
-if ($new_task){
+$task_text = $_POST['task'] ?? '';
+if ($task_text){
+    $new_task = [
+        'done' => false,
+        'text' => $task_text,
+        'id' => uniqid()
+    ]
     $tasks [] = $new_task;
     // trasformo i dati in json
     $tasks = json_encode($json_data, true);
     // e li pusho nel file .json
     file_put_contents($json_path, $tasks);
     $tasks = json_decode($json_data, true);
-    // NON CAPISCO PERCHè APPENA INVIO UN DATO IN POST MI SI CANCELLA TOTALMENTE L'ARRAY NEL FILE JSON
+    // mi da sempre problemi con la politica cors
 } 
 
 // Invia la risposta in JSON
